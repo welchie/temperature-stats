@@ -6,11 +6,16 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 @Entity
 @Table (name = "temperature_data")
+@JsonIgnoreProperties(ignoreUnknown = true)
+@XmlRootElement
 public class TemperatureDataBean extends PanacheEntity {
 
     @Column(name="temp_celcius")
