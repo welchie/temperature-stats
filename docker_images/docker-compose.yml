@@ -16,7 +16,7 @@ services:
   temperature-stats:
     build:
       temperature-stats
-    image: "welchie99/tempersture-stats:1.1"
+    image: "welchie99/temperature-stats:1.1"
     ports:
       - "8080:8080"
     depends_on:
