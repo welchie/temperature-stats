@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -34,6 +35,14 @@ public class TemperatureDataBeanTest {
         for (int i=0;i< NUM_RECORDS; i++)
         {
             times.add(LocalDateTime.now());
+        }
+
+        //Clear All old data
+        List<TemperatureDataBean> dataBeans = new ArrayList<TemperatureDataBean>();
+        dataBeans = TemperatureDataBean.findAllData();
+        for(TemperatureDataBean t:dataBeans)
+        {
+            t.delete();
         }
     
         //Create some data here
@@ -68,6 +77,7 @@ public class TemperatureDataBeanTest {
     }
 
     @Test
+    @Transactional
     public void testCreate()
     {
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -75,7 +85,7 @@ public class TemperatureDataBeanTest {
         dataBean.persist();
 
         List<TemperatureDataBean> testData = TemperatureDataBean.findByDeviceName("device99");
-        assertEquals(testData.size(),1);
+        assertTrue(testData.size() >= 1);
         assertEquals(testData.get(0).deviceName, "device99");
         assertEquals(testData.get(0).deviceID, "123456");
         assertEquals(testData.get(0).temperatureCelcius, "11.11");
